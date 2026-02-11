@@ -62,7 +62,7 @@ A aplicação utiliza MySQL como banco de dados.
 Base URL:
 http://localhost:8000/api
 
-### 📌 Listar produtos (com paginação)
+### 📌 Listar produtos (com paginação e busca por nome)
 GET /products
 
 Parâmetros opcionais:
@@ -95,7 +95,7 @@ Retorno:
 ---
 
 ### 📌 Atualizar produto
-PUT /products/{id}
+PUT /products/{product}
 ```
 Body (JSON):
 {
