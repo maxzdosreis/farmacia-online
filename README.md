@@ -29,6 +29,18 @@ farmacia-online
 - TypeScript
 - HTML / CSS
 
+## Estrutura da Tabela products
+```
+- id (int)
+- name (string)
+- price (decimal 10,2)
+- description (text)
+- category (string)
+- active (boolean)
+- created_at
+- updated_at
+```
+
 ## 📦 Backend (Laravel)
 
 O backend é responsável por expor uma API REST para o gerenciamento de produtos, incluindo:
@@ -44,6 +56,58 @@ A aplicação utiliza MySQL como banco de dados.
 - PHP 8.1+
 - Composer
 - MySQL
+
+## 🔗 Endpoints da API
+
+Base URL:
+http://localhost:8000/api
+
+### 📌 Listar produtos (com paginação e busca por nome)
+GET /products
+
+Parâmetros opcionais:
+- page (int)
+- search (string)
+
+Exemplo:
+- GET /products?page=1
+- GET /products?search=analgesico
+- GET /products?search=a&page=2
+
+---
+
+### 📌 Cadastrar produto
+POST /products
+
+Body (JSON):
+```
+{
+  "name": "Dipirona",
+  "price": 12.90,
+  "description": "Analgésico",
+  "category": "Medicamento",
+  "active": true
+}
+```
+Retorno:
+201 Created
+
+---
+
+### 📌 Atualizar produto
+PUT /products/{product}
+```
+Body (JSON):
+{
+  "name": "Dipirona 500mg",
+  "price": 14.90,
+  "description": "Analgésico atualizado",
+  "category": "Medicamento",
+  "active": true
+}
+```
+Retorno:
+200 OK
 
 ### Como rodar o backend localmente
 
