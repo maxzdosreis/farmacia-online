@@ -7,8 +7,14 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function index() {
-        $products = Product::paginate(10);
+    public function index(Request $request) {
+        $query = Product::query();
+
+        if ($request->has('search')) {
+            $query->where('name', 'like','%'. $request->search .'%');
+        }
+    
+        $products = $query->paginate(10);
 
         return response()->json($products);
     }
