@@ -54,13 +54,18 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit() {
+
+    const formValue = this.form.value;
+
+    formValue.price = formValue.price.replace(',', '.');
+
     if (this.form.invalid) return;
 
     if (this.isEdit) {
-      this.productService.update(this.productId, this.form.value)
+      this.productService.update(this.productId, formValue)
         .subscribe(() => this.router.navigate(['/']));
     } else {
-      this.productService.create(this.form.value)
+      this.productService.create(formValue)
         .subscribe(() => this.router.navigate(['/']));
     }
   }
