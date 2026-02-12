@@ -4,11 +4,17 @@
     <div>
         <label>Nome</label>
         <input type="text" formControlName="name" placeholder="Nome do produto...">
+        <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+          Nome é obrigatório
+        </div>
     </div>
 
     <div>
         <label>Preço</label>
         <input type="text" step="0.01" formControlName="price">
+        <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched">
+          Preço é obrigatório
+        </div>
     </div>
 
     <div>
@@ -33,7 +39,5 @@
     </label>
   </div>
 
-  <button type="submit">
-    {{ isEdit ? 'Atualizar' : 'Salvar' }}
-  </button>
+  <button type="submit">Salvar</button>
 </form>

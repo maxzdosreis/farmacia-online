@@ -55,6 +55,11 @@ export class ProductFormComponent implements OnInit {
 
   onSubmit() {
 
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    
     const formValue = this.form.value;
 
     formValue.price = formValue.price.replace(',', '.');
