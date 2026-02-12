@@ -1,5 +1,7 @@
 <h2>Lista de Produtos</h2>
 
+<a routerLink="/create">Novo Produto</a>
+
 <table border="1" cellpadding="5">
     <thead>
         <tr>
@@ -9,6 +11,7 @@
             <th>Descrição</th>
             <th>Categoria</th>
             <th>Ativo</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +22,9 @@
             <td>{{ product.description }}</td>
             <td>{{ product.category }}</td>
             <td>{{ product.active ? 'Sim' : 'Não' }}</td>
+            <td>
+                <a [routerLink]="['/edit', product.id]">Editar</a>
+            </td>
         </tr>
     </tbody>
 </table>
