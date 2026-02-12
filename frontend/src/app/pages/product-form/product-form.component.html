@@ -1,0 +1,39 @@
+<h2>{{ isEdit ? 'Editar Produto' : 'Cadastrar Produto' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <label>Nome</label>
+        <input type="text" formControlName="name" placeholder="Nome do produto...">
+    </div>
+
+    <div>
+        <label>Preço</label>
+        <input type="text" step="0.01" formControlName="price">
+    </div>
+
+    <div>
+    <label>Descrição</label>
+    <textarea formControlName="description"></textarea>
+  </div>
+
+  <div>
+    <label>Categoria</label>
+    <select formControlName="category">
+      <option value="">Selecione</option>
+      <option *ngFor="let c of categories" [value]="c">
+        {{ c }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="active">
+      Ativo
+    </label>
+  </div>
+
+  <button type="submit">
+    {{ isEdit ? 'Atualizar' : 'Salvar' }}
+  </button>
+</form>
