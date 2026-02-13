@@ -1,43 +1,85 @@
-<h2>{{ isEdit ? 'Editar Produto' : 'Cadastrar Produto' }}</h2>
+<div class="page-header">
+    <h1 class="page-title">{{ isEdit ? '✏️ Editar Produto' : '➕ Novo Produto' }}</h1>
+    <p class="page-subtitle">{{ isEdit ? 'Atualize as informações do produto' : 'Preencha os dados para cadastrar um novo produto' }}</p>
+</div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div>
-        <label>Nome</label>
-        <input type="text" formControlName="name" placeholder="Nome do produto...">
-        <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
-          Nome é obrigatório
+<div class="card slide-up">
+  <div class="card-header">
+    <h2 class="card-title">Informações do Produto</h2>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label class="form-label">Nome do Produto<span class="required">*</span></label>
+            <input 
+              type="text" 
+              formControlName="name"
+              class="form-control"
+              placeholder="Ex: Dipirona 500mg, Vitamina C 1g......"
+            >
+            <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="field-error">
+              Nome é obrigatório
+            </div>
         </div>
-    </div>
 
-    <div>
-        <label>Preço</label>
-        <input type="text" step="0.01" formControlName="price">
-        <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched">
-          Preço é obrigatório
+        <div class="form-group">
+            <label class="form-label">Preço (R$)<span class="required">*</span></label>
+            <input 
+              type="text" 
+              step="0.01" 
+              formControlName="price"
+              class="form-control"
+              placeholder="Ex: 15.90 ou 15,90"
+            >
+            <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched" class="field-error">
+              Preço é obrigatório
+            </div>
         </div>
-    </div>
+        
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select formControlName="category" class="form-control">
+            <option value="">Selecione uma categoria</option>
+            <option *ngFor="let cat of categories" [value]="cat">
+              {{ cat }}
+            </option>
+          </select>
+        </div>
 
-    <div>
-    <label>Descrição</label>
-    <textarea formControlName="description"></textarea>
+        <div class="form-group">
+          <label class="form-label">Descrição</label>
+          <textarea 
+            formControlName="description"
+            class="form-control"
+            rows="4"
+            placeholder="Descreva as características, composição, indicações..."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <div class="form-check">
+            <input 
+              type="checkbox" 
+              formControlName="active"
+              id="active"
+            >
+            <label for="active" style="cursor: pointer; user-select: none;">
+              Produto ativo (disponível para venda)
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button 
+            type="submit" 
+            class="btn btn-primary btn-lg"
+          >
+            <span>
+              {{'Salvar Produto'}}
+            </span>
+          </button>
+        </div>
+    </form>
   </div>
-
-  <div>
-    <label>Categoria</label>
-    <select formControlName="category">
-      <option value="">Selecione</option>
-      <option *ngFor="let c of categories" [value]="c">
-        {{ c }}
-      </option>
-    </select>
-  </div>
-
-  <div>
-    <label>
-      <input type="checkbox" formControlName="active">
-      Ativo
-    </label>
-  </div>
-
-  <button type="submit">Salvar</button>
-</form>
+</div>

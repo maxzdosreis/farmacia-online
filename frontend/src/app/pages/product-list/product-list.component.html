@@ -1,72 +1,126 @@
-<h2>Lista de Produtos</h2>
-
-<div *ngIf="errorMessage" style="color: red; margin-bottom: 10px;">
-  {{ errorMessage }}
+<div class="page-header">
+    <h1 class="page-title">Gerenciamento de Produtos</h1>
+    <p class="page-subtitle">Gerencie o catálogo completo da sua farmácia online</p>
 </div>
 
-<div *ngIf="isLoading" class="loading-message">
-  Carregando produtos...
-</div>
-
-<div style="margin-bottom: 15 px;">
-    <input 
-      type="text"
-      [(ngModel)]="searchTerm"
-      placeholder="Buscar por nome..."
-      (keyup.enter)="search()"
-    >
-    <button (click)="search()" [disabled]="isLoading">Buscar</button>
-</div>
-
-<a routerLink="/create">Novo Produto</a>
-
-<div *ngIf="!isLoading && products.length > 0">
-    <table border="1" cellpadding="5">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Preço</th>
-                <th>Descrição</th>
-                <th>Categoria</th>
-                <th>Ativo</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let product of products">
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.active ? 'Sim' : 'Não' }}</td>
-                <td>
-                    <a [routerLink]="['/edit', product.id]">Editar</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div style="margin-top: 20px;">
-        <button 
-        (click)="loadProducts(currentPage - 1)" 
-        [disabled]="currentPage === 1">
-        Anterior
+<div class="search-bar">
+    <form class="search-form" (submit)="search()">
+        <div class="search-input-group">
+            <label class="form-label">Pesquisar produto</label>
+            <input 
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchTerm"
+            name="searchTerm"
+            placeholder="Digite o nome do medicamento, vitamina..."
+            (keyup.enter)="search()"
+            >
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+            <span *ngIf="!isLoading">Buscar</span>
+            <span *ngIf="isLoading">Buscando...</span>
         </button>
+    </form>
+</div>
 
-        <span style="margin: 0 10px;">
-            Página {{ currentPage }} de {{ lastPage }}
-        </span>
+<div *ngIf="errorMessage" class="alert error-message">
+  <span class="alert-icon">⚠️</span>
+  <span>{{ errorMessage }}</span>
+</div>
 
-        <button 
-        (click)="loadProducts(currentPage + 1)" 
-        [disabled]="currentPage === lastPage">
-        Próxima
-        </button>
+<div *ngIf="isLoading" class="alert loading-message">
+  <span class="alert-icon">⏳</span>
+  <span>Carregando produtos...</span>
+</div>
+
+<div *ngIf="!isLoading && !errorMessage && products.length === 0" class="empty-state">
+    <div class="empty-state-icon">📦</div>
+    <h2 class="empty-state-title">Nenhum produto encontrado</h2>
+    <p class="empty-state-description">
+    {{ searchTerm ? 'Tente buscar com outro termo ou limpe os filtros.' : 'Comece cadastrando seu primeiro produto!' }}
+    </p>
+    <a routerLink="/create" class="btn btn-primary btn-lg">
+        Cadastrar Primeiro Produto
+    </a>
+</div>
+
+<div *ngIf="!isLoading && products.length > 0" class="card slide-up">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="card-title">Lista de Produtos</h2>
+        <a [routerLink]="['/create']" class="btn btn-primary btn-lg">
+            Cadastrar Primeiro Produto
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td><strong>#{{ product.id }}</strong></td>
+                        <td>
+                            <strong>{{ product.name }}</strong>
+                            <div *ngIf="product.description" style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 4px;">
+                                {{ product.description }}
+                            </div>
+                        </td>
+                        <td>
+                            <span *ngIf="product.category" style="background: var(--primary-light); color: var(--primary-dark); padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                                {{ product.category }}
+                            </span>
+                            <span *ngIf="!product.category" style="color: var(--text-secondary);">—</span>
+                        </td>
+                        <td>
+                            <strong style="color: var(--primary-color); font-size: 1.125rem;">
+                                {{ product.price | currency:'BRL' }}
+                            </strong>
+                        </td>
+                        <td>
+                            <span 
+                                class="badge"
+                                [class.badge-success]="product.active"
+                                [class.badge-danger]="!product.active"
+                            >
+                                {{ product.active ? '✓ Ativo' : '✗ Inativo' }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="table-actions">
+                                <a [routerLink]="['/edit', product.id]" class="btn btn-secondary btn-sm">✏️ Editar</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<div *ngIf="!isLoading && products.length === 0 && !errorMessage" class="info-message">
-  Nenhum produto cadastrado ainda.
+<div *ngIf="!isLoading && products.length > 0" class="pagination slide-up">
+    <button 
+        class="btn btn-outline btn-sm"
+        (click)="loadProducts(currentPage - 1)" 
+        [disabled]="currentPage === 1 || isLoading">
+        ← Anterior
+    </button>
+
+    <span class="pagination-info">
+        Página <strong>{{ currentPage }}</strong> de <strong>{{ lastPage }}</strong>
+    </span>
+
+    <button
+        class="btn btn-outline btn-sm"
+        (click)="loadProducts(currentPage + 1)" 
+        [disabled]="currentPage === lastPage || isLoading">
+        Próxima →
+    </button>
 </div>
