@@ -1,6 +1,13 @@
 <div class="page-header">
-    <h1 class="page-title">Gerenciamento de Produtos</h1>
-    <p class="page-subtitle">Gerencie o catálogo completo da sua farmácia online</p>
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h1 class="page-title">💊 Gerenciamento de Produtos</h1>
+      <p class="page-subtitle">Gerencie o catálogo completo da sua farmácia online</p>
+    </div>
+    <a routerLink="/create" class="btn btn-primary btn-lg">
+      Novo Produto
+    </a>
+  </div>
 </div>
 
 <div class="search-bar">
@@ -39,17 +46,11 @@
     <p class="empty-state-description">
     {{ searchTerm ? 'Tente buscar com outro termo ou limpe os filtros.' : 'Comece cadastrando seu primeiro produto!' }}
     </p>
-    <a routerLink="/create" class="btn btn-primary btn-lg">
-        Cadastrar Primeiro Produto
-    </a>
 </div>
 
 <div *ngIf="!isLoading && products.length > 0" class="card slide-up">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h2 class="card-title">Lista de Produtos</h2>
-        <a [routerLink]="['/create']" class="btn btn-primary btn-lg">
-            Cadastrar Primeiro Produto
-        </a>
     </div>
     <div class="card-body">
         <div class="table-container">
