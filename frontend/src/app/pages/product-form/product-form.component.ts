@@ -36,6 +36,9 @@ export class ProductFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
+      this.isEdit = true;
+      this.productId = Number(id);
+
       this.productService.getProductById(Number(id)).subscribe({
           next: (product) => {
             this.form.patchValue(product)
