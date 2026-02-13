@@ -1,57 +1,72 @@
 <h2>Lista de Produtos</h2>
 
+<div *ngIf="errorMessage" style="color: red; margin-bottom: 10px;">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="isLoading" class="loading-message">
+  Carregando produtos...
+</div>
+
 <div style="margin-bottom: 15 px;">
     <input 
       type="text"
       [(ngModel)]="searchTerm"
       placeholder="Buscar por nome..."
+      (keyup.enter)="search()"
     >
-    <button (click)="search()">Buscar</button>
+    <button (click)="search()" [disabled]="isLoading">Buscar</button>
 </div>
 
 <a routerLink="/create">Novo Produto</a>
 
-<table border="1" cellpadding="5">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Preço</th>
-            <th>Descrição</th>
-            <th>Categoria</th>
-            <th>Ativo</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let product of products">
-            <td>{{ product.id }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.description }}</td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.active ? 'Sim' : 'Não' }}</td>
-            <td>
-                <a [routerLink]="['/edit', product.id]">Editar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div *ngIf="!isLoading && products.length > 0">
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Ativo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.active ? 'Sim' : 'Não' }}</td>
+                <td>
+                    <a [routerLink]="['/edit', product.id]">Editar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-<div style="margin-top: 20px;">
-    <button 
-      (click)="loadProducts(currentPage - 1)" 
-      [disabled]="currentPage === 1">
-      Anterior
-    </button>
+    <div style="margin-top: 20px;">
+        <button 
+        (click)="loadProducts(currentPage - 1)" 
+        [disabled]="currentPage === 1">
+        Anterior
+        </button>
 
-    <span style="margin: 0 10px;">
-        Página {{ currentPage }} de {{ lastPage }}
-    </span>
+        <span style="margin: 0 10px;">
+            Página {{ currentPage }} de {{ lastPage }}
+        </span>
 
-    <button 
-      (click)="loadProducts(currentPage + 1)" 
-      [disabled]="currentPage === lastPage">
-      Próxima
-    </button>
+        <button 
+        (click)="loadProducts(currentPage + 1)" 
+        [disabled]="currentPage === lastPage">
+        Próxima
+        </button>
+    </div>
+</div>
+
+<div *ngIf="!isLoading && products.length === 0 && !errorMessage" class="info-message">
+  Nenhum produto cadastrado ainda.
 </div>
