@@ -11,8 +11,14 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(page: number) {
-    return this.http.get<any>(`${this.apiUrl}?page=${page}`)
+  getProducts(page: number = 1, search: string = '') {
+    let url = `${this.apiUrl}?page=${page}`;
+
+    if (search.trim() !== '') {
+      url += `&search=${search}`;
+    }
+
+    return this.http.get<any>(url);
   }
 
   create(data: any) {
