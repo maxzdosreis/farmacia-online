@@ -1,5 +1,14 @@
 <h2>Lista de Produtos</h2>
 
+<div style="margin-bottom: 15 px;">
+    <input 
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Buscar por nome..."
+    >
+    <button (click)="search()">Buscar</button>
+</div>
+
 <a routerLink="/create">Novo Produto</a>
 
 <table border="1" cellpadding="5">
