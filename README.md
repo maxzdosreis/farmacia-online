@@ -207,9 +207,97 @@ http://localhost:8000
 
 ## 🖥️ Frontend (Angular)
 
-O frontend será responsável por consumir a API do backend e disponibilizar uma interface para gerenciamento dos produtos.
+O frontend é responsável por consumir a API do backend e disponibilizar uma interface moderna e responsiva para gerenciamento dos produtos.
 
-> O frontend ainda deverá ser desenvolvido.
+### Funcionalidades Implementadas
+
+- ✅ Listagem de produtos com paginação
+- ✅ Busca de produtos por nome
+- ✅ Cadastro de novos produtos
+- ✅ Edição de produtos existentes
+- ✅ Validação de formulários
+- ✅ Tratamento de erros amigável
+- ✅ Interface responsiva (mobile-first)
+- ✅ Design temático (paleta verde saúde)
+
+### Pré-requisitos
+- Node.js 18.x ou superior
+- npm 9.x ou superior
+- Angular CLI 18.x
+
+## Como rodar o frontend localmente
+
+1. **Certifique-se de que o backend está rodando** em `http://localhost:8000`
+
+2. Acesse a pasta do frontend:
+```bash
+cd farmacia-online/frontend
+```
+
+3. Instale as dependências:
+```bash
+npm install
+```
+
+4. Inicie o servidor de desenvolvimento:
+```bash
+ng serve
+```
+Ou, alternativamente:
+```bash
+npm start
+```
+
+5. Acesse o navegador:
+```
+http://localhost:4200
+```
+
+O frontend estará rodando e conectado à API! ✅
+
+## Estrutura de Rotas
+
+| Rota | Componente | Descrição |
+|------|-----------|-----------|
+| ` ` | ProductListComponent | Listagem de produtos |
+| `/create` | ProductFormComponent | Cadastro de produto |
+| `/edit/:id` | ProductFormComponent | Edição de produto |
+
+# 🧪 Como Testar o Sistema Completo
+
+### 1. Backend (Terminal 1)
+```bash
+cd farmacia-online/backend
+php artisan serve
+```
+✅ Backend rodando em: `http://localhost:8000`
+
+### 2. Frontend (Terminal 2)
+```bash
+cd farmacia-online/frontend
+ng serve
+```
+✅ Frontend rodando em: `http://localhost:4200`
+
+### 3. Testando as funcionalidades
+
+1. **Cadastrar um produto**:
+   - Acesse `http://localhost:4200/create`
+   - Preencha o formulário
+   - Clique em "Cadastrar Produto"
+
+2. **Listar produtos**:
+   - Acesse `http://localhost:4200`
+   - Veja a listagem com paginação
+
+3. **Buscar produtos**:
+   - Na tela de listagem, digite no campo de busca
+   - Clique em "Buscar"
+
+4. **Editar um produto**:
+   - Clique em "Editar" em qualquer produto da lista
+   - Modifique os campos
+   - Clique em "Salvar Produto"
 
 ## 🧠 Decisões de Projeto
 
@@ -217,3 +305,10 @@ O frontend será responsável por consumir a API do backend e disponibilizar uma
 - O banco de dados é criado manualmente, enquanto as tabelas são gerenciadas pelo Laravel.
 - O escopo do projeto foi mantido simples, focando exclusivamente na entidade Produto.
 - Foram priorizados clareza, organização e facilidade de manutenção do código.
+
+# 👨‍💻 Autor
+
+Desenvolvido por **Max dos Reis**
+
+- GitHub: [@maxzdosreis](https://github.com/maxzdosreis)
+---
